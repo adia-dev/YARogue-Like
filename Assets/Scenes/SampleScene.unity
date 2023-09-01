@@ -145,7 +145,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151647081}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09297286, y: -0.07206236, z: 0.0309122, w: -0.99257624}
+  m_LocalRotation: {x: 0.09297286, y: -0.07206233, z: 0.030912187, w: -0.99257624}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -522,7 +522,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 517904843}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08197755, y: -0.071715675, z: 0.031708162, w: -0.99354476}
+  m_LocalRotation: {x: 0.08197755, y: -0.07171567, z: 0.031708155, w: -0.99354476}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1769,7 +1769,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939845897}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16621092, y: 0.0013768112, z: -0.00023206929, w: 0.9860892}
+  m_LocalRotation: {x: 0.16621092, y: 0.0013768072, z: -0.00023206862, w: 0.9860892}
   m_LocalPosition: {x: -3.4039247, y: 5.276, z: -10.193961}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4165,7 +4165,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -4236,8 +4236,9 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  groundCheckRadius: 0.075
+  groundCheckRadius: 0.22
   groundCheckColor: {r: 1, g: 0, b: 1, a: 1}
+  drawGroundCheck: 0
 --- !u!1 &919132149128989498
 GameObject:
   m_ObjectHideFlags: 0
@@ -5624,7 +5625,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 464aa8dc83108f249a5b3cd75f0f5d85, type: 2}
+  - {fileID: 2100000, guid: 6d46a93f7fa1a462485e0a8d5d85c4be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
