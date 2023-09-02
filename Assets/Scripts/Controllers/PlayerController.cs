@@ -25,6 +25,13 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         movementBehavior.HandleMovement();
+
+        if (InputManager.Instance.ShouldUseSkill1) 
+            animator.SetTrigger("Skill1");
+
+
+        if (InputManager.Instance.ShouldUseSkill2)
+            animator.SetTrigger("Skill2");
     }
 
 }

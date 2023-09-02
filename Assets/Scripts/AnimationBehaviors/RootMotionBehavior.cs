@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class RootMotionBehavior : StateMachineBehaviour
 {
-    [Header("Movement/Rotation")]
+    [Header("Movement")]
     [SerializeField] bool lockMovementOnEnter = false; 
     [SerializeField] bool lockMovementOnExit = false; 
+
+    [Header("Rotation")]
     [SerializeField] bool lockRotationOnEnter = false; 
     [SerializeField] bool lockRotationOnExit = false; 
+
+    [Header("Gravity")]
+    [SerializeField] bool affectedByGravityOnEnter = true; 
+    [SerializeField] bool affectedByGravityOnExit = true; 
+
 
     [Header("Root Motion")]
     [SerializeField] bool enableRootMotionOnEnter = true; 
@@ -20,6 +27,7 @@ public class RootMotionBehavior : StateMachineBehaviour
         animator.applyRootMotion = enableRootMotionOnEnter;
         InputManager.Instance.MovementLocked = lockMovementOnEnter;
         InputManager.Instance.RotationLocked = lockRotationOnEnter;
+        InputManager.Instance.AffectedByGravity = affectedByGravityOnEnter;
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
@@ -28,6 +36,7 @@ public class RootMotionBehavior : StateMachineBehaviour
         animator.applyRootMotion = enableRootMotionOnExit;
         InputManager.Instance.MovementLocked = lockMovementOnExit;
         InputManager.Instance.RotationLocked = lockRotationOnExit;
+        InputManager.Instance.AffectedByGravity = affectedByGravityOnExit;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

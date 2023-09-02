@@ -62,6 +62,60 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill1"",
+                    ""type"": ""Button"",
+                    ""id"": ""831d267e-2bb4-4465-b385-e383d53882a5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skill2"",
+                    ""type"": ""Button"",
+                    ""id"": ""66df91b3-7560-48ca-8ec5-99d3093e4eb6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""87d17962-bbd5-4426-8a89-3ee931b859ab"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PrimaryFingerPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""f155f2e7-2e6a-4ab3-a4e7-aa9a577d61d8"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SecondaryFingerPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""61a8cd6f-b55f-48b4-bb30-fd607f1bc23a"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SecondaryFingerTouched"",
+                    ""type"": ""Button"",
+                    ""id"": ""3ef3a13d-c42b-43d6-9e52-580084d106f4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -196,6 +250,105 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6392748b-7f4f-40f8-8a2a-fd2682209344"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4b8f82b-ad97-4fa7-a127-0767736f6afc"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7aabc5c8-f2bb-45b8-a126-37978fd97793"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9012ff9-3eec-40fb-bb79-4697919d842c"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skill2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c498b014-c9b5-4486-b0f4-ad23b49e44eb"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f487155f-18e6-4a22-9ba5-22822828d21c"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c2ca4570-408b-45b6-b6ea-d6f8c6501f45"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PrimaryFingerPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cfdbad38-406d-4dd1-983a-e86ce5641ad4"",
+                    ""path"": ""<Touchscreen>/touch1/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondaryFingerPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6cdbf5b1-cdd3-48ac-8863-5b55b741f333"",
+                    ""path"": ""<Touchscreen>/touch1/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SecondaryFingerTouched"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -208,6 +361,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Gameplay_Run = m_Gameplay.FindAction("Run", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_Crouch = m_Gameplay.FindAction("Crouch", throwIfNotFound: true);
+        m_Gameplay_Skill1 = m_Gameplay.FindAction("Skill1", throwIfNotFound: true);
+        m_Gameplay_Skill2 = m_Gameplay.FindAction("Skill2", throwIfNotFound: true);
+        m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
+        m_Gameplay_PrimaryFingerPosition = m_Gameplay.FindAction("PrimaryFingerPosition", throwIfNotFound: true);
+        m_Gameplay_SecondaryFingerPosition = m_Gameplay.FindAction("SecondaryFingerPosition", throwIfNotFound: true);
+        m_Gameplay_SecondaryFingerTouched = m_Gameplay.FindAction("SecondaryFingerTouched", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -273,6 +432,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Run;
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_Crouch;
+    private readonly InputAction m_Gameplay_Skill1;
+    private readonly InputAction m_Gameplay_Skill2;
+    private readonly InputAction m_Gameplay_Look;
+    private readonly InputAction m_Gameplay_PrimaryFingerPosition;
+    private readonly InputAction m_Gameplay_SecondaryFingerPosition;
+    private readonly InputAction m_Gameplay_SecondaryFingerTouched;
     public struct GameplayActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -281,6 +446,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_Gameplay_Run;
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
         public InputAction @Crouch => m_Wrapper.m_Gameplay_Crouch;
+        public InputAction @Skill1 => m_Wrapper.m_Gameplay_Skill1;
+        public InputAction @Skill2 => m_Wrapper.m_Gameplay_Skill2;
+        public InputAction @Look => m_Wrapper.m_Gameplay_Look;
+        public InputAction @PrimaryFingerPosition => m_Wrapper.m_Gameplay_PrimaryFingerPosition;
+        public InputAction @SecondaryFingerPosition => m_Wrapper.m_Gameplay_SecondaryFingerPosition;
+        public InputAction @SecondaryFingerTouched => m_Wrapper.m_Gameplay_SecondaryFingerTouched;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -302,6 +473,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
+            @Skill1.started += instance.OnSkill1;
+            @Skill1.performed += instance.OnSkill1;
+            @Skill1.canceled += instance.OnSkill1;
+            @Skill2.started += instance.OnSkill2;
+            @Skill2.performed += instance.OnSkill2;
+            @Skill2.canceled += instance.OnSkill2;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
+            @PrimaryFingerPosition.started += instance.OnPrimaryFingerPosition;
+            @PrimaryFingerPosition.performed += instance.OnPrimaryFingerPosition;
+            @PrimaryFingerPosition.canceled += instance.OnPrimaryFingerPosition;
+            @SecondaryFingerPosition.started += instance.OnSecondaryFingerPosition;
+            @SecondaryFingerPosition.performed += instance.OnSecondaryFingerPosition;
+            @SecondaryFingerPosition.canceled += instance.OnSecondaryFingerPosition;
+            @SecondaryFingerTouched.started += instance.OnSecondaryFingerTouched;
+            @SecondaryFingerTouched.performed += instance.OnSecondaryFingerTouched;
+            @SecondaryFingerTouched.canceled += instance.OnSecondaryFingerTouched;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -318,6 +507,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
+            @Skill1.started -= instance.OnSkill1;
+            @Skill1.performed -= instance.OnSkill1;
+            @Skill1.canceled -= instance.OnSkill1;
+            @Skill2.started -= instance.OnSkill2;
+            @Skill2.performed -= instance.OnSkill2;
+            @Skill2.canceled -= instance.OnSkill2;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
+            @PrimaryFingerPosition.started -= instance.OnPrimaryFingerPosition;
+            @PrimaryFingerPosition.performed -= instance.OnPrimaryFingerPosition;
+            @PrimaryFingerPosition.canceled -= instance.OnPrimaryFingerPosition;
+            @SecondaryFingerPosition.started -= instance.OnSecondaryFingerPosition;
+            @SecondaryFingerPosition.performed -= instance.OnSecondaryFingerPosition;
+            @SecondaryFingerPosition.canceled -= instance.OnSecondaryFingerPosition;
+            @SecondaryFingerTouched.started -= instance.OnSecondaryFingerTouched;
+            @SecondaryFingerTouched.performed -= instance.OnSecondaryFingerTouched;
+            @SecondaryFingerTouched.canceled -= instance.OnSecondaryFingerTouched;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -341,5 +548,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnRun(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
+        void OnSkill1(InputAction.CallbackContext context);
+        void OnSkill2(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
+        void OnPrimaryFingerPosition(InputAction.CallbackContext context);
+        void OnSecondaryFingerPosition(InputAction.CallbackContext context);
+        void OnSecondaryFingerTouched(InputAction.CallbackContext context);
     }
 }

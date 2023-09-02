@@ -84,10 +84,17 @@ public class MovementBehavior : MonoBehaviour
         Vector2 moveInput = InputManager.Instance.MoveInput;
         directionInput = new Vector3(moveInput.x, 0f, moveInput.y).normalized;
 
-        if (moveInput.magnitude != 0 && !InputManager.Instance.RotationLocked)
+        if (moveInput.magnitude != 0)
         {
-            float targetRotation = Mathf.Atan2(directionInput.x, directionInput.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
+            if (!InputManager.Instance.RotationLocked)
+            {
+                float targetRotation = Mathf.Atan2(directionInput.x, directionInput.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+                transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetRotation, ref turnSmoothVelocity, turnSmoothTime);
+            }
+        }
+        else
+        {
+            InputManager.Instance.ShouldRun = false;
         }
     }
 
@@ -95,8 +102,23 @@ public class MovementBehavior : MonoBehaviour
     private void HandleSpeedAndMovement()
     {
         Vector2 moveInput = InputManager.Instance.MoveInput;
-        float targetSpeed = isGrounded && InputManager.Instance.ShouldCrouch ? crouchSpeed : InputManager.Instance.ShouldRun ? runSpeed : walkSpeed;
+        float targetSpeed = 0.0f;
+
+        if (InputManager.Instance.ShouldRun)
+        {
+            targetSpeed = runSpeed;
+            InputManager.Instance.ShouldCrouch = false;
+        }
+        else
+        {
+            targetSpeed = isGrounded && InputManager.Instance.ShouldCrouch ? crouchSpeed : walkSpeed;
+        }
+
         speed = Mathf.SmoothDamp(speed, targetSpeed * moveInput.magnitude, ref speedSmoothVelocity, speedSmoothTime);
+
+        if (moveInput.magnitude == 0)
+            InputManager.Instance.ShouldRun = false;
+
         characterController.Move(speed * Time.deltaTime * transform.forward);
     }
 
@@ -132,7 +154,9 @@ public class MovementBehavior : MonoBehaviour
             lastGroundedFrame++;
         }
 
-        moveDirection.y += gravity * Time.deltaTime;
+        if (InputManager.Instance.AffectedByGravity)
+            moveDirection.y += gravity * Time.deltaTime;
+
         characterController.Move(moveDirection * Time.deltaTime);
     }
 
@@ -168,41 +192,46 @@ public class MovementBehavior : MonoBehaviour
     {
         Gizmos.color = isGrounded ? groundCheckColor : Color.red;
 
-        if (characterController != null && drawGroundCheck)
+        if (characterController != null)
         {
-            Gizmos.DrawWireSphere(transform.position, groundCheckRadius);
-
-            for (float i = -characterController.radius; i < characterController.radius; i += groundCheckRadius)
+            if (drawGroundCheck)
             {
-                Gizmos.DrawLine(transform.position - Vector3.right * i, transform.position - Vector3.right * i + Vector3.down * groundCheckRadius);
+                Gizmos.DrawWireSphere(transform.position, groundCheckRadius);
+
+                for (float i = -characterController.radius; i < characterController.radius; i += groundCheckRadius)
+                {
+                    Gizmos.DrawLine(transform.position - Vector3.right * i, transform.position - Vector3.right * i + Vector3.down * groundCheckRadius);
+                }
             }
+
+
+            // Combine the player's rotation with the camera's rotation
+            float cameraAngle = transform.eulerAngles.y + cameraTransform.eulerAngles.y;
+
+            // Convert the angle to a vector
+            Vector3 cameraForward = cameraTransform.forward;
+            cameraForward.y = 0;
+            cameraForward.Normalize();
+
+            // Draw a line from the player in the direction the camera is facing
+            Gizmos.color = Color.blue;  // Change color for this specific line, if you want
+            Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + cameraForward * 2.0f);
+            Gizmos.DrawWireSphere(transform.position + Vector3.up + cameraForward * 2.0f, 0.15f);
+
+            Gizmos.color = Color.magenta;  // Change color for this specific line, if you want
+            Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + transform.forward * 2.0f);
+            Gizmos.DrawWireSphere(transform.position + Vector3.up + transform.forward * 2.0f, 0.15f);
+
+
+            Vector3 cameraDirectionInput = cameraTransform.TransformDirection(directionInput);
+            cameraDirectionInput.y = 0.0f;
+            cameraDirectionInput.Normalize();
+
+            Gizmos.color = Color.red;  // Change color for this specific line, if you want
+            Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + cameraDirectionInput * directionInput.magnitude * 2.0f);
+            Gizmos.DrawWireSphere(transform.position + Vector3.up + cameraDirectionInput * directionInput.magnitude * 2.0f, 0.15f);
         }
 
-        // Combine the player's rotation with the camera's rotation
-        float cameraAngle = transform.eulerAngles.y + cameraTransform.eulerAngles.y;
-
-        // Convert the angle to a vector
-        Vector3 cameraForward = cameraTransform.forward;
-        cameraForward.y = 0;
-        cameraForward.Normalize();
-
-        // Draw a line from the player in the direction the camera is facing
-        Gizmos.color = Color.blue;  // Change color for this specific line, if you want
-        Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + cameraForward * 2.0f);
-        Gizmos.DrawWireSphere(transform.position + Vector3.up + cameraForward * 2.0f, groundCheckRadius);
-
-        Gizmos.color = Color.magenta;  // Change color for this specific line, if you want
-        Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + transform.forward * 2.0f);
-        Gizmos.DrawWireSphere(transform.position + Vector3.up + transform.forward * InputManager.Instance.MoveInput.magnitude * 2.0f, groundCheckRadius);
-
-
-        Vector3 cameraDirectionInput = cameraTransform.TransformDirection(directionInput);
-        cameraDirectionInput.y = 0.0f;
-        cameraDirectionInput.Normalize();
-
-        Gizmos.color = Color.red;  // Change color for this specific line, if you want
-        Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + cameraDirectionInput * directionInput.magnitude * 2.0f);
-        Gizmos.DrawWireSphere(transform.position + Vector3.up + cameraDirectionInput * directionInput.magnitude * 2.0f, groundCheckRadius);
     }
 }
 

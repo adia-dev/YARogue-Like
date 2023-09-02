@@ -12,13 +12,29 @@ public class InputManager : MonoBehaviour
     public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
 
-    public bool ShouldJump { get;  set; }
-    public bool ShouldRun { get;  set; }
-    public bool ShouldCrouch { get;  set; }
+    public bool ShouldJump { get; set; }
+    public bool ShouldRun { get; set; }
+    public bool ShouldCrouch { get; set; }
 
+    public bool ShouldUseSkill1 { get; set; }
+    public bool ShouldUseSkill2 { get; set; }
 
     public bool MovementLocked { get; set; }
     public bool RotationLocked { get; set; }
+    public bool AffectedByGravity { get; set; } = true;
+
+    public Vector2 PrimaryFinger { get; private set; }
+    public Vector2 SecondaryFinger { get; private set; }
+    public bool SecondaryFingerTouched { get; private set; }
+
+    public Vector2 CameraInput { get; set; }
+
+    public enum ControlScheme { Any, Gamepad, KeyboardAndMouse, TouchScreen };
+    [Header("Scheme")]
+    public ControlScheme SelectedControlScheme = ControlScheme.Any;
+
+    [Header("UI")]
+    public Canvas TouchScreenUI = null;
 
     [Header("Debug")]
     public bool HideCursor = false;
@@ -35,7 +51,35 @@ public class InputManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        if(HideCursor) {
+        if (SelectedControlScheme == ControlScheme.Any || SystemInfo.deviceType == DeviceType.Handheld)
+        {
+            switch (SystemInfo.deviceType)
+            {
+                case DeviceType.Handheld:
+                    SelectedControlScheme = ControlScheme.TouchScreen;
+                    break;
+                case DeviceType.Desktop:
+                    SelectedControlScheme = ControlScheme.KeyboardAndMouse;
+                    break;
+                default:
+                    SelectedControlScheme = ControlScheme.Gamepad;
+                    break;
+            }
+        }
+
+        if (SelectedControlScheme == ControlScheme.TouchScreen)
+        {
+            if (TouchScreenUI != null)
+                TouchScreenUI.enabled = true;
+        }
+        else
+        {
+            if (TouchScreenUI != null)
+                TouchScreenUI.enabled = false;
+        }
+
+        if (HideCursor)
+        {
             Cursor.visible = HideCursor;
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -44,16 +88,27 @@ public class InputManager : MonoBehaviour
 
         // Register input listeners
         inputActions.Gameplay.Move.performed += ctx => MoveInput = ctx.ReadValue<Vector2>();
-        inputActions.Gameplay.Move.canceled += ctx => MoveInput = Vector2.zero;
+        inputActions.Gameplay.Move.canceled += _ => MoveInput = Vector2.zero;
 
-        inputActions.Gameplay.Jump.performed += ctx => ShouldJump = true;
-        inputActions.Gameplay.Jump.canceled += ctx => ShouldJump = false;
+        inputActions.Gameplay.Jump.performed += _ => ShouldJump = true;
+        inputActions.Gameplay.Jump.canceled += _ => ShouldJump = false;
 
-        inputActions.Gameplay.Run.performed += ctx => ShouldRun = true;
-        inputActions.Gameplay.Run.canceled += ctx => ShouldRun = false;
+        inputActions.Gameplay.Run.performed += _ => ShouldRun = !ShouldRun;
+        inputActions.Gameplay.Crouch.performed += _ => ShouldCrouch = !ShouldCrouch;
 
-        inputActions.Gameplay.Crouch.performed += ctx => ShouldCrouch = true;
-        inputActions.Gameplay.Crouch.canceled += ctx => ShouldCrouch = false;
+
+        inputActions.Gameplay.Skill1.performed += _ => ShouldUseSkill1 = true;
+        inputActions.Gameplay.Skill1.canceled += _ => ShouldUseSkill1 = false;
+
+        inputActions.Gameplay.Skill2.performed += _ => ShouldUseSkill2 = true;
+        inputActions.Gameplay.Skill2.canceled += _ => ShouldUseSkill2 = false;
+
+        inputActions.Gameplay.Look.performed += ctx => CameraInput = ctx.ReadValue<Vector2>();
+
+        inputActions.Gameplay.PrimaryFingerPosition.performed += ctx => PrimaryFinger = ctx.ReadValue<Vector2>();
+        inputActions.Gameplay.SecondaryFingerPosition.performed += ctx => SecondaryFinger = ctx.ReadValue<Vector2>();
+        inputActions.Gameplay.SecondaryFingerTouched.started += _ => SecondaryFingerTouched = true;
+        inputActions.Gameplay.SecondaryFingerTouched.canceled += _ => SecondaryFingerTouched = false;
     }
 
     private void OnEnable()
