@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
@@ -36,26 +37,26 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Touch-based Zoom
-        // Handle zoom
+        HandleCameraZoom();
+    }
+
+    private void HandleCameraZoom()
+    {
         float zoomDelta = 0.0f;
 
-        if (inputManagerInstance.SecondaryFingerTouched)
+        if (inputManagerInstance.SecondaryFingerTouched && inputManagerInstance.MoveInput.magnitude == 0)
         {
-            DisableCameraRotation();
             if (!isPinching)
             {
-                // This is the start of the pinch
                 initialPinchDistance = Vector2.Distance(inputManagerInstance.PrimaryFinger, inputManagerInstance.SecondaryFinger);
+                DisableCameraRotation();
                 isPinching = true;
             }
             else
             {
-                // Compute new pinch distance and determine zoomDelta
                 float newPinchDistance = Vector2.Distance(inputManagerInstance.PrimaryFinger, inputManagerInstance.SecondaryFinger);
                 zoomDelta = initialPinchDistance - newPinchDistance;
 
-                // Update initialPinchDistance for next frame
                 initialPinchDistance = newPinchDistance;
             }
         }
@@ -66,23 +67,17 @@ public class CameraController : MonoBehaviour
             isPinching = false;
         }
 
-        HandleZoomCamera(zoomDelta * zoomSpeed * Time.deltaTime);
+        targetZoomLevel += zoomDelta * zoomSpeed * Time.deltaTime;
+        targetZoomLevel = Mathf.Clamp(targetZoomLevel, minZoom, maxZoom);
 
-    }
 
-    private void HandleZoomCamera(float deltaZoom)
-    {
-        if (freeLookCamera)
+        if (freeLookCamera != null)
         {
-            targetZoomLevel += deltaZoom;
-            targetZoomLevel = Mathf.Clamp(targetZoomLevel, minZoom, maxZoom);
-
-
             freeLookCamera.m_Lens.FieldOfView = Mathf.Lerp(
-                freeLookCamera.m_Lens.FieldOfView,
-                targetZoomLevel,
-                Time.deltaTime * zoomLerpSpeed
-            );
+                    freeLookCamera.m_Lens.FieldOfView,
+                    targetZoomLevel,
+                    Time.deltaTime * zoomLerpSpeed
+                    );
         }
     }
 
