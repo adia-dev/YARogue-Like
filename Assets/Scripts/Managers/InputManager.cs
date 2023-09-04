@@ -19,6 +19,9 @@ public class InputManager : MonoBehaviour
     public bool ShouldUseSkill1 { get; set; }
     public bool ShouldUseSkill2 { get; set; }
 
+    public bool ShouldUseAttack1 { get; set; }
+    public bool ShouldUseAttack2 { get; set; }
+
     public bool MovementLocked { get; set; }
     public bool RotationLocked { get; set; }
     public bool AffectedByGravity { get; set; } = true;
@@ -102,6 +105,13 @@ public class InputManager : MonoBehaviour
 
         inputActions.Gameplay.Skill2.performed += _ => ShouldUseSkill2 = true;
         inputActions.Gameplay.Skill2.canceled += _ => ShouldUseSkill2 = false;
+
+
+        inputActions.Gameplay.Attack1.performed += _ => ShouldUseAttack1 = true;
+        inputActions.Gameplay.Attack1.canceled += _ => ShouldUseAttack1 = false;
+
+        inputActions.Gameplay.Attack2.performed += _ => ShouldUseAttack2 = true;
+        inputActions.Gameplay.Attack2.canceled += _ => ShouldUseAttack2 = false;
 
         inputActions.Gameplay.Look.performed += ctx => CameraInput = ctx.ReadValue<Vector2>();
 

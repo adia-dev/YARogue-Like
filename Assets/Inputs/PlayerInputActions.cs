@@ -116,6 +116,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack1"",
+                    ""type"": ""Button"",
+                    ""id"": ""e28e1ce7-ff2b-4130-bc23-6c4f563bad42"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack2"",
+                    ""type"": ""Button"",
+                    ""id"": ""c8cd869f-846d-4f6a-aa63-6ebbc0025a99"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -338,6 +356,50 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""SecondaryFingerTouched"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77b5405f-e974-4de3-9d94-202994b3aa5d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""25208a5f-20bc-4dfa-99e1-65fe338bb94f"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9e2e078-023a-4e6a-bcd8-014d72884b6e"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59dcf2e2-8f42-4cb7-83df-253ccd69fee3"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -356,6 +418,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Gameplay_PrimaryFingerPosition = m_Gameplay.FindAction("PrimaryFingerPosition", throwIfNotFound: true);
         m_Gameplay_SecondaryFingerPosition = m_Gameplay.FindAction("SecondaryFingerPosition", throwIfNotFound: true);
         m_Gameplay_SecondaryFingerTouched = m_Gameplay.FindAction("SecondaryFingerTouched", throwIfNotFound: true);
+        m_Gameplay_Attack1 = m_Gameplay.FindAction("Attack1", throwIfNotFound: true);
+        m_Gameplay_Attack2 = m_Gameplay.FindAction("Attack2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -427,6 +491,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_PrimaryFingerPosition;
     private readonly InputAction m_Gameplay_SecondaryFingerPosition;
     private readonly InputAction m_Gameplay_SecondaryFingerTouched;
+    private readonly InputAction m_Gameplay_Attack1;
+    private readonly InputAction m_Gameplay_Attack2;
     public struct GameplayActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -441,6 +507,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @PrimaryFingerPosition => m_Wrapper.m_Gameplay_PrimaryFingerPosition;
         public InputAction @SecondaryFingerPosition => m_Wrapper.m_Gameplay_SecondaryFingerPosition;
         public InputAction @SecondaryFingerTouched => m_Wrapper.m_Gameplay_SecondaryFingerTouched;
+        public InputAction @Attack1 => m_Wrapper.m_Gameplay_Attack1;
+        public InputAction @Attack2 => m_Wrapper.m_Gameplay_Attack2;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -480,6 +548,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SecondaryFingerTouched.started += instance.OnSecondaryFingerTouched;
             @SecondaryFingerTouched.performed += instance.OnSecondaryFingerTouched;
             @SecondaryFingerTouched.canceled += instance.OnSecondaryFingerTouched;
+            @Attack1.started += instance.OnAttack1;
+            @Attack1.performed += instance.OnAttack1;
+            @Attack1.canceled += instance.OnAttack1;
+            @Attack2.started += instance.OnAttack2;
+            @Attack2.performed += instance.OnAttack2;
+            @Attack2.canceled += instance.OnAttack2;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -514,6 +588,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @SecondaryFingerTouched.started -= instance.OnSecondaryFingerTouched;
             @SecondaryFingerTouched.performed -= instance.OnSecondaryFingerTouched;
             @SecondaryFingerTouched.canceled -= instance.OnSecondaryFingerTouched;
+            @Attack1.started -= instance.OnAttack1;
+            @Attack1.performed -= instance.OnAttack1;
+            @Attack1.canceled -= instance.OnAttack1;
+            @Attack2.started -= instance.OnAttack2;
+            @Attack2.performed -= instance.OnAttack2;
+            @Attack2.canceled -= instance.OnAttack2;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -543,5 +623,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnPrimaryFingerPosition(InputAction.CallbackContext context);
         void OnSecondaryFingerPosition(InputAction.CallbackContext context);
         void OnSecondaryFingerTouched(InputAction.CallbackContext context);
+        void OnAttack1(InputAction.CallbackContext context);
+        void OnAttack2(InputAction.CallbackContext context);
     }
 }

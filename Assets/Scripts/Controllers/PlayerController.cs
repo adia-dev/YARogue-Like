@@ -26,12 +26,25 @@ public class PlayerController : MonoBehaviour
     {
         movementBehavior.HandleMovement();
 
+        animator.ResetTrigger("Skill1");
+        animator.ResetTrigger("Skill2");
+        animator.ResetTrigger("Attack1");
+        animator.ResetTrigger("Attack2");
+
         if (InputManager.Instance.ShouldUseSkill1) 
             animator.SetTrigger("Skill1");
 
 
         if (InputManager.Instance.ShouldUseSkill2)
             animator.SetTrigger("Skill2");
+
+
+        if (InputManager.Instance.ShouldUseAttack1) 
+            animator.SetTrigger("Attack1");
+
+
+        if (InputManager.Instance.ShouldUseAttack2)
+            animator.SetTrigger("Attack2");
     }
 
 }
